@@ -6,3 +6,11 @@ CREATE TABLE nexustiles.sea_surface_temp  (
 	tile_id    	uuid PRIMARY KEY,
 	tile_blob  	blob
 );
+
+
+CREATE KEYSPACE IF NOT EXISTS nexusxarray WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
+
+CREATE TABLE nexusxarray.rapid  (
+	tile_id    	uuid PRIMARY KEY,
+	tile_blob  	blob
+);

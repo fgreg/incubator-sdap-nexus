@@ -99,6 +99,7 @@ message TileData{
         SwathTile swath_tile = 3;
         TimeSeriesTile time_series_tile = 4;
     }
+    optional bytes xarray_data = 5;
 }
 
 message DimensionSlice{

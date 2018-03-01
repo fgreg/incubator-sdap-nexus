@@ -17,4 +17,21 @@ WORKDIR /tmp
 
 COPY docker-entrypoint.sh /tmp/docker-entrypoint.sh
 
+RUN rm -rf /nexus/analysis
+COPY data-access /nexus/data-access
+COPY analysis /nexus/analysis
+COPY nexusproto.tar.gz /nexus/nexusproto/nexusproto.tar.gz
+
+WORKDIR /nexus/nexusproto
+RUN pip install nexusproto.tar.gz --force --ignore-installed
+
+WORKDIR /nexus/data-access
+RUN python setup.py install
+
+WORKDIR /nexus/analysis
+RUN python setup.py install
+
+
+
+
 ENTRYPOINT ["/tmp/docker-entrypoint.sh"]

@@ -242,7 +242,7 @@ if __name__ == "__main__":
         default_host=options.address,
         debug=options.debug
     )
-    app.listen(options.port)
+    app.listen(options.port, no_keep_alive=True)
 
     log.info("Starting HTTP listener...")
     tornado.ioloop.IOLoop.current().start()

@@ -42,6 +42,8 @@ class Tile(object):
         self.times = None  # This should be a 1-d ndarray
         self.data = None  # This should be an ndarray with shape len(times) x len(latitudes) x len(longitudes)
 
+        self.xarray = None
+
         self.meta_data = None  # This should be a dict of the form { 'meta_data_name' : [[[ndarray]]] }. Each ndarray should be the same shape as data.
 
     def __str__(self):
