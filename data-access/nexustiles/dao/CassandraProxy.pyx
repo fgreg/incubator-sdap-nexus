@@ -14,11 +14,13 @@
 # limitations under the License.
 
 import uuid
+import pickle
 from ConfigParser import NoOptionError
 from multiprocessing.synchronize import Lock
 
 import nexusproto.DataTile_pb2 as nexusproto
 import numpy as np
+import xarray
 from cassandra.cqlengine import columns, connection, CQLEngineException
 from cassandra.cqlengine.models import Model
 from cassandra.policies import TokenAwarePolicy, DCAwareRoundRobinPolicy
@@ -113,6 +115,21 @@ class NexusTileData(Model):
                 meta_array = np.ma.masked_invalid(from_shaped_array(meta_data_obj.meta_data))
                 reshaped_meta_array = self._to_standard_index(meta_array, tile_data.shape)
                 meta_data[name] = reshaped_meta_array
+
+            # x_ds = pickle.loads(self._get_nexus_tile().xarray_data)
+            # latitude_data = x_ds.coords['lat'].values
+            # longitude_data = x_ds.coords['lon'].values
+            # time_data = x_ds.coords['time'].values
+            #
+            # data_array = x_ds['Qout']
+            # desired_shape = (len(x_ds.coords['time']), len(x_ds.coords['lat']), len(x_ds.coords['lon']))
+            # reshaped_array = np.ma.masked_all(desired_shape)
+            # for t_idx in range(0, desired_shape[0]):
+            #     for r_idx in range(0, desired_shape[1]):
+            #         reshaped_array[t_idx, r_idx, r_idx] = data_array[t_idx, r_idx]
+            #
+            # tile_data = reshaped_array
+            # meta_data = None
 
             return latitude_data, longitude_data, time_data, tile_data, meta_data
         else:
